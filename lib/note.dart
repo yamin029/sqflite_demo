@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sqlite_demo/constants.dart';
+import 'package:sqlite_demo/note_list.dart';
 import 'package:sqlite_demo/providers/note_provider.dart';
 
 
 enum NoteMode { Editing, Adding }
 
 class Note extends StatefulWidget {
+  static String id = 'note_screen';
+
   final Map<String, dynamic> note;
   final NoteMode _noteMode;
   Note(this._noteMode,this.note);
@@ -76,6 +79,8 @@ class _NoteState extends State<Note> {
                           'title':title,
                           'text' : text
                         });
+
+
                       });
 
                     }
@@ -88,7 +93,9 @@ class _NoteState extends State<Note> {
                         }
                       );
                     }
-                    Navigator.pop(context);
+                    Navigator.pop(context, () {
+                      setState(() {});
+                    });
                   },
                 ),
                 _NoteButton(
@@ -98,6 +105,7 @@ class _NoteState extends State<Note> {
                   ),
                   color: Colors.blueGrey,
                   onPressed: () {
+                    NoteList.refresh();
                     Navigator.pop(context);
                   },
                 ),
@@ -106,9 +114,13 @@ class _NoteState extends State<Note> {
                         padding: const EdgeInsets.all(8.0),
                         child: _NoteButton(
                           onPressed: () {
-                            NoteProvider.deleteNote(widget.note['id']);
 
+                            setState(() {
+                              NoteProvider.deleteNote(widget.note['id']);
+
+                            });
                             Navigator.pop(context);
+
                           },
                           text: Text(
                             'Delete',

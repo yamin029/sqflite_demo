@@ -4,21 +4,51 @@ import 'package:sqlite_demo/providers/note_provider.dart';
 
 class NoteList extends StatefulWidget {
   @override
-  _NoteListState createState() => _NoteListState();
+  NoteListState createState() {
+    return new NoteListState();
+  }
+
+  static void refresh() {
+    refresh();
+  }
 }
 
-class _NoteListState extends State<NoteList> {
+class NoteListState extends State<NoteList> {
+  refresh() {
+    setState(() {
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notes'),
+        title: Row(
+          children: [
+            Icon(Icons.event_note),
+            Text('Notes'),
+          ],
+        ),
+        actions: [
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {});
+                },
+                child: Icon(
+                  Icons.refresh,
+                  size: 26.0,
+                ),
+              )),
+        ],
       ),
       body: FutureBuilder(
         future: NoteProvider.getNoteList(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final notes = snapshot.data;
+            // print(notes);
             return ListView.builder(
               itemBuilder: (context, index) {
                 return GestureDetector(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'note_list.dart';
 
 void main() {
@@ -7,17 +6,18 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return
       MaterialApp(
+        builder: (context, child) => new SafeArea(child: child),
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+
         home: NoteList(),
       );
 

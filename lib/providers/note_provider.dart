@@ -30,6 +30,7 @@ class NoteProvider {
     if (db == null) {
       await open();
     }
+     print(db.query('Notes'));
     return await db.query('Notes');
   }
 
